@@ -1,2 +1,5 @@
 .*
+./conf/conf.d/*
+./www/public
+./www/tools
 !.gitignore
