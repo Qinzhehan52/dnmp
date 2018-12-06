@@ -14,7 +14,7 @@ services:
       - net-php
 
   php:
-    build: ./php/php72/
+    build: ./php/php72 
     expose:
       - "9000"
     volumes:
@@ -41,30 +41,13 @@ services:
 
   redis:
     image: redis:4.0
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass paswd..q
     networks:
       - net-redis
     ports:
       - "6379:6379"
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    ports:
-      - "8080:80"
-    networks:
-      - net-mysql
-    environment:
-      - PMA_HOST=mysql
-      - PMA_PORT=3306
-
-  phpredisadmin:
-    image: erikdubbelboer/phpredisadmin:latest
-    ports:
-      - "8081:80"
-    networks:
-      - net-redis
-    environment:
-      - REDIS_1_HOST=redis
-      - REDIS_1_PORT=6379
+    volumes:
+      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
 
 networks:
   net-php:
